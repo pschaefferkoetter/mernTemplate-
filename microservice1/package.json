@@ -4,12 +4,9 @@
   "description": "A generic microservice template",
   "main": "index.js",
   "scripts": {
-    "lint": "echo linting",
-    "prettier": "echo Prettier formatting",
-    "prettier:fix": "echo fix Prettier formatting",
     "start:dev": "nodemon ./src/index.js",
     "start": "echo starting prod server",
-    "test": "jest"
+    "test": "jest --watchAll --no-cache"
   },
   "jest": {
     "testEnvironment" : "node"
