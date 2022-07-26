@@ -32,13 +32,7 @@ describe('test email validity', () => {
   })
 });
 
-
-//test password:
-//  min length of alpanumeric chars
-//  min of 1 Upper Case
-//  min of 1 lower case
-//  min of 1 number
-
+// check password requiremnts
 describe('test password requirements', () =>{
   let email = 'test@gmail.com';
   let url = ''
@@ -84,3 +78,28 @@ describe('test password requirements', () =>{
       .expect(200);
   })
 })
+
+// user must not be allowed to use any other submit any other type of request
+describe('test route avaibility', () =>{
+  let email = '';
+  let url = '';
+  let password = '';
+
+  beforeAll(() => {
+    email = 'test@gmail.com';
+    url = '/api/microservice1/signup';
+    password = '1Abcdefg';
+  });
+
+  it('should return 405 for non-post request', async () => {
+    await request(app).get(url).expect(405);
+    await request(app).delete(url).expect(405);
+  });
+
+  it('should return 200 for post request', async () => {
+    await request(app)
+      .post(url)
+      .send({ email, password })
+      .expect(200);
+  })
+});

@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 
 const signUpRouter = express.Router();
 
+//post
 signUpRouter.post('/api/microservice1/signup',
   [
     body('email').isEmail().withMessage('Invalid Email!'),
@@ -20,6 +21,11 @@ signUpRouter.post('/api/microservice1/signup',
     }
 
     res.sendStatus(200);
+});
+
+// all other request
+signUpRouter.all('/api/microservice1/signup', (req, res) => {
+  res.sendStatus(405);
 });
 
 module.exports = signUpRouter;
