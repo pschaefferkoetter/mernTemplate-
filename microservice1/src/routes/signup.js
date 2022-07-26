@@ -2,9 +2,8 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 
 const signUpRouter = express.Router();
-
-//post
-signUpRouter.post('/api/microservice1/signup',
+const signUpURL = '/api/microservice1/signup';
+signUpRouter.post(signUpURL,
   [
     body('email').isEmail().withMessage('Invalid Email!'),
     body('password').isLength({min: 8}).withMessage('Password must be at least 8 characters'),
@@ -24,8 +23,8 @@ signUpRouter.post('/api/microservice1/signup',
 });
 
 // all other request
-signUpRouter.all('/api/microservice1/signup', (req, res) => {
+signUpRouter.all(signUpURL, (req, res) => {
   res.sendStatus(405);
 });
 
-module.exports = signUpRouter;
+module.exports = {signUpRouter, signUpURL};

@@ -1,5 +1,5 @@
 const express = require('express');
-const signUpRouter = require('./routes');
+const {signUpRouter} = require('./routes');
 
 const app = express();
 
