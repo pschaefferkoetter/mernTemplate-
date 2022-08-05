@@ -102,7 +102,7 @@ describe('test route avaibility', () =>{
 // Sanitization
 describe('email sanitization tests', () => {
   const normalizeEmail = 's15@google.com';
-  
+
   it('should not have upper case letters in email domain', async () => {
     const res = await request(app)
       .post(signUpURL)
@@ -115,8 +115,15 @@ describe('email sanitization tests', () => {
       expect(res.body.email).toEqual(normalizeEmail);
 
   })
-})
+});
 
 describe('password sanitization tests', () => {
-
-})
+  it('should not contain unescaped characterer', async () => {
+    await request(app)
+      .post(signUpURL)
+      .send({
+        email: 's15@google.com',
+        password: 'A1bcedfgQ<'
+      }).expect(200);
+  });
+});

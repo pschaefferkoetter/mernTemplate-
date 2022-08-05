@@ -11,8 +11,10 @@ signUpRouter.post(signUpURL,
       .withMessage('Invalid Email!')
       .normalizeEmail(),
     body('password')
+      .trim()
       .isLength({min: 8})
-      .withMessage('Password must be at least 8 characters'),
+      .withMessage('Password must be at least 8 characters')
+      .escape(),
     body('password')
       .matches(/^(.*[a-z].*)$/)  // regex for at least 1 lower case letter
       .withMessage('Passord must constain at least 1 lowercase letter'),
@@ -33,6 +35,10 @@ signUpRouter.post(signUpURL,
 
     if(/.+@[A-Z]/g.test(req.body.email)) {      // regex cheking for cap after the @ in an email
       res.sendStatus(409)
+    }
+
+    if(/[><'"\/]/g.test(req.body.password)) {
+      res.sendStatus(409);
     }
 
     res.send({email: req.body.email});
